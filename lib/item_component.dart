@@ -18,6 +18,7 @@ class _itemComponentState extends State<itemComponent> {
   final _firestore = FirebaseFirestore.instance;
   List<shopItem> items = <shopItem>[];
   bool isInitialLoading = true;
+  final settings = appSettings();
 
   @override
   void initState() {
@@ -88,19 +89,34 @@ class _itemComponentState extends State<itemComponent> {
   Widget itemCard(shopItem data) {
     return Row(
       children: [
-        Text(
-          '${data.nama}',
-          style: settings().defaultTextStyle,
+        Column(
+          children: [
+            Text('Nama Barang :'),
+            Text('Harga Barang :'),
+          ],
         ),
         SizedBox(width: 3),
-        Text(
-          '${data.harga}',
-          style: settings().defaultTextStyle,
+        Column(
+          children: [
+            Text(
+              '${data.nama}',
+              style: settings.defaultTextStyle,
+            ),
+            Text(
+              '${data.harga}',
+              style: settings.defaultTextStyle,
+            ),
+          ],
         ),
         SizedBox(width: 3),
-        Text(
-          '${data.tanggalMasuk}',
-          style: settings().defaultTextStyle,
+        Column(
+          children: [
+            Text('Terakhir diubah :'),
+            Text(
+              '${data.tanggalMasuk}',
+              style: settings.defaultTextStyle,
+            ),
+          ],
         ),
       ],
     );

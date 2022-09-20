@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class shopItem {
   String? gambar;
   String? nama;
-  DateTime? tanggalMasuk;
+  String? tanggalMasuk;
   String? harga;
 
   shopItem({this.gambar, this.nama, this.tanggalMasuk, this.harga});
@@ -11,7 +11,7 @@ class shopItem {
   shopItem.fromJson(Map<String, dynamic> json) {
     gambar = json['Gambar'];
     nama = json['Nama'];
-    tanggalMasuk = DateTime.parse(json['Tanggal Masuk'].toDate().toString());
+    tanggalMasuk = json['Tanggal Masuk'];
     harga = json['Harga'];
   }
 

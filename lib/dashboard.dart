@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:primart/settings.dart';
 import 'add_item_page.dart';
 
 import 'item_component.dart';
@@ -37,34 +38,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   final _firestore = FirebaseFirestore.instance;
   int _counter = 0;
-
-  void _incrementCounter() {
-    DateTime _now = DateTime.now();
-    _firestore.collection('item').add({
-      'Gambar': '${_counter}.jpg',
-      'Nama': 'item $_counter',
-      'Tanggal Masuk': _now,
-      'Harga': 'Rp. $_counter',
-    });
-    setState(() {
-      _counter++;
-    });
-    print('counter is $_counter');
-  }
-
-  void _showAddItemPage() async {
-    showMaterialModalBottomSheet(
-      isDismissible: true,
-      context: context,
-      expand: false,
-      builder: (context) {
-        return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return addItemPage();
-        });
-      },
-    );
-  }
+  final settings = appSettings();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +46,11 @@ class _DashboardPageState extends State<DashboardPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
         ),
         body: Center(
           child: Column(
@@ -95,6 +74,34 @@ class _DashboardPageState extends State<DashboardPage> {
           child: const Icon(Icons.add),
         ), // This trailing comma makes auto-formatting nicer for build methods.
       ),
+    );
+  }
+
+  void _showAddItemPage() async {
+    showMaterialModalBottomSheet(
+      isDismissible: true,
+      context: context,
+      expand: false,
+      builder: (context) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              child: Center(
+                  child: Text(
+                'Tambah Barang baru',
+                style: settings.titleTextStyle,
+              )),
+              color: Colors.blue,
+              width: double.infinity,
+              height: 50,
+            ),
+            addItemPage(),
+          ],
+        );
+      },
     );
   }
 }
