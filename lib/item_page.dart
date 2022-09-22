@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 // data shown includes price, images, names, date edited
 
 class itemPage extends StatefulWidget {
-  const itemPage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  // final String title;
+  final String idDoc;
+  const itemPage({Key? key, required this.idDoc}) : super(key: key);
   @override
   State<itemPage> createState() => _itemPageState();
 }
@@ -15,7 +16,7 @@ class _itemPageState extends State<itemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('test'),
+        child: Text(widget.idDoc),
       ),
     );
   }

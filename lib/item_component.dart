@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:primart/item_page.dart';
 import 'item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'settings.dart';
@@ -30,10 +31,8 @@ class _itemComponentState extends State<itemComponent> {
 
   void getItems() async {
     var responses = await _firestore.collection('item').get();
-    for (var e in responses.docs) {
-      var d = shopItem.fromJson(e.data());
-      items.add(d);
-    }
+    items = shopItem().objectToJson(responses);
+    // print('test object $_test');
     setState(() {
       isInitialLoading = false;
     });
@@ -87,39 +86,52 @@ class _itemComponentState extends State<itemComponent> {
   }
 
   Widget itemCard(shopItem data) {
-    return Row(
-      children: [
-        Column(
-          children: [
-            Text('Nama Barang :'),
-            Text('Harga Barang :'),
-          ],
-        ),
-        SizedBox(width: 3),
-        Column(
-          children: [
-            Text(
-              '${data.nama}',
-              style: settings.defaultTextStyle,
-            ),
-            Text(
-              '${data.harga}',
-              style: settings.defaultTextStyle,
-            ),
-          ],
-        ),
-        SizedBox(width: 3),
-        Column(
-          children: [
-            Text('Terakhir diubah :'),
-            Text(
-              '${data.tanggalMasuk}',
-              style: settings.defaultTextStyle,
-            ),
-          ],
-        ),
-      ],
+    return InkWell(
+      onTap: () => goToPage(data.id!),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Nama Barang :'),
+              Text('Harga Barang :'),
+              Text('Terakhir diubah :'),
+            ],
+          ),
+          SizedBox(width: 3),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${data.nama}',
+                style: settings.defaultTextStyle,
+              ),
+              Text(
+                '${data.harga}',
+                style: settings.defaultTextStyle,
+              ),
+              Text(
+                '${data.tanggalMasuk}',
+                style: settings.defaultTextStyle,
+              ),
+            ],
+          ),
+          SizedBox(width: 10),
+          Icon(Icons.mail),
+        ],
+      ),
     );
+  }
+
+  Future goToPage(String idDocument) async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => itemPage(
+            idDoc: idDocument,
+          ),
+          fullscreenDialog: true,
+        ));
   }
 
   Widget showLoad() {
