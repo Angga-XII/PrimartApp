@@ -3,10 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:primart/settings.dart';
-import 'add_item_page.dart';
 
-import 'item_component.dart';
+import 'package:primart/config/settings.dart';
+import 'package:primart/page/add_item_page.dart';
+import 'package:primart/page/item_component.dart';
+import 'package:primart/page/barcode_scanner.dart';
+import 'package:primart/page/pencarian_page.dart';
 
 //dahsboard include 2 functions menu
 //shows a scrollable item list
@@ -56,25 +58,41 @@ class _DashboardPageState extends State<DashboardPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              ElevatedButton(
+                  onPressed: _showBarcodePage, child: Text('Masuk ke barcode')),
+              ElevatedButton(
+                  onPressed: _showPencarianPage,
+                  child: Text('Masuk ke pencarian')),
               Container(child: itemComponent()),
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
           // onPressed: _incrementCounter,
           onPressed: _showAddItemPage,
-          tooltip: 'Increment',
+          tooltip: 'Tambah Barang baru?',
           child: const Icon(Icons.add),
         ), // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
+  }
+
+  void _showBarcodePage() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => BarcodeScannerPage(),
+          fullscreenDialog: true,
+        ));
+  }
+
+  void _showPencarianPage() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => PencarianPage(),
+          fullscreenDialog: true,
+        ));
   }
 
   void _showAddItemPage() async {

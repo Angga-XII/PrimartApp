@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:primart/item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'settings.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-//the model or something for the item
+import 'package:primart/config/item_model.dart';
+import 'package:primart/config/settings.dart';
+
+//the config or something for the item
 //this page shows the detailed item page
 //including a button to edit it
 // data shown includes price, images, names, date edited

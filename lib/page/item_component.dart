@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:primart/item_page.dart';
-import 'item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'settings.dart';
 
-//the model or something for the item
-//this page shows the detailed item page
-//including a button to edit it
-// data shown includes price, images, names, date edited
+import 'package:primart/page/item_page.dart';
+import 'package:primart/config/item_model.dart';
+import 'package:primart/config/settings.dart';
 
 class itemComponent extends StatefulWidget {
   const itemComponent({Key? key}) : super(key: key);
@@ -80,14 +76,14 @@ class _itemComponentState extends State<itemComponent> {
                 ),
               ),
             ),
-            child: itemCard(items[index])),
+            child: _itemCard(items[index])),
       ),
     );
   }
 
-  Widget itemCard(shopItem data) {
+  Widget _itemCard(shopItem data) {
     return InkWell(
-      onTap: () => goToPage(data.id!),
+      onTap: () => goToPage(data),
       child: Row(
         children: [
           Column(
@@ -117,18 +113,18 @@ class _itemComponentState extends State<itemComponent> {
             ],
           ),
           SizedBox(width: 10),
-          Icon(Icons.mail),
+          // Icon(Icons.mail),
         ],
       ),
     );
   }
 
-  Future goToPage(String idDocument) async {
+  Future goToPage(shopItem data) async {
     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => itemPage(
-            idDoc: idDocument,
+            item: data,
           ),
           fullscreenDialog: true,
         ));
