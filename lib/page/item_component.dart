@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:primart/page/item_page.dart';
 import 'package:primart/config/item_model.dart';
 import 'package:primart/config/settings.dart';
+import 'package:primart/page/test_scroll.dart';
 
 class itemComponent extends StatefulWidget {
   const itemComponent({Key? key}) : super(key: key);
@@ -37,25 +38,31 @@ class _itemComponentState extends State<itemComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: getListItem());
+    return getListItem();
   }
 
   Widget getListItem() {
     // return Text('test get list');
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(0),
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            // return Container(height: 10, child: Text('test'));
-            return buildList(index);
-          },
-        ),
-      ],
+    return SingleChildScrollView(
+      // child: _testList()
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(0),
+            itemCount: items.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              // return Container(height: 10, child: Text('test'));
+              return buildList(index);
+            },
+          ),
+        ],
+      ),
     );
   }
 

@@ -50,7 +50,7 @@ class _addItemPageState extends State<addItemPage> {
       //   'Gambar': '}.jpg',
       'Nama': '${_namaController.text}',
       'Tanggal Masuk': _now.toIso8601String(),
-      'Harga': 'Rp.${_hargaController.text}',
+      'Harga': '${_hargaController.text}',
     };
     AwesomeDialog(
       context: context,
@@ -60,10 +60,20 @@ class _addItemPageState extends State<addItemPage> {
       desc: 'Apa anda yakin anda ingin menyimpan barang ini?',
       btnCancelOnPress: () {},
       btnOkOnPress: () {
-        _firestore.collection('item').add(_data);
+        _firestore.collection('item').add(_data).then(showMessageSuccess());
       },
     ).show();
-    print('test ${_namaController.text} ${_hargaController.text}');
+    print('test edit ${_namaController.text} ${_hargaController.text}');
+  }
+
+  showMessageSuccess() {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.noHeader,
+      title: 'Berhasil',
+      desc: 'Perubahan data berhasil',
+      btnOkOnPress: () {},
+    ).show();
   }
 
   void _resetData() {

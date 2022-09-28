@@ -9,6 +9,8 @@ import 'package:primart/page/add_item_page.dart';
 import 'package:primart/page/item_component.dart';
 import 'package:primart/page/barcode_scanner.dart';
 import 'package:primart/page/pencarian_page.dart';
+import 'package:primart/page/test_scroll.dart';
+import 'package:primart/page/item_list.dart';
 
 //dahsboard include 2 functions menu
 //shows a scrollable item list
@@ -38,8 +40,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  final _firestore = FirebaseFirestore.instance;
-  int _counter = 0;
   final settings = appSettings();
 
   @override
@@ -54,25 +54,24 @@ class _DashboardPageState extends State<DashboardPage> {
             color: Colors.white, //change your color here
           ),
         ),
+        // body: Container(child: itemComponent()),
+        // body: Container(child: testPage()),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               ElevatedButton(
-                  onPressed: _showBarcodePage, child: Text('Masuk ke barcode')),
+                  onPressed: _showItemListPage,
+                  child: Text('Masuk ke Item List')),
+              ElevatedButton(
+                  onPressed: _showBarcodePage, child: Text('Masuk ke Barcode')),
               ElevatedButton(
                   onPressed: _showPencarianPage,
                   child: Text('Masuk ke pencarian')),
-              Container(child: itemComponent()),
+              ElevatedButton(
+                  onPressed: _showTestPage, child: Text('Masuk ke test page')),
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          // onPressed: _incrementCounter,
-          onPressed: _showAddItemPage,
-          tooltip: 'Tambah Barang baru?',
-          child: const Icon(Icons.add),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
   }
@@ -95,31 +94,21 @@ class _DashboardPageState extends State<DashboardPage> {
         ));
   }
 
-  void _showAddItemPage() async {
-    showMaterialModalBottomSheet(
-      isDismissible: true,
-      context: context,
-      expand: false,
-      builder: (context) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              child: Center(
-                  child: Text(
-                'Tambah Barang baru',
-                style: settings.titleTextStyle,
-              )),
-              color: Colors.blue,
-              width: double.infinity,
-              height: 50,
-            ),
-            addItemPage(),
-          ],
-        );
-      },
-    );
+  void _showTestPage() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => testPage(),
+          fullscreenDialog: true,
+        ));
+  }
+
+  void _showItemListPage() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => ItemList(),
+          fullscreenDialog: true,
+        ));
   }
 }

@@ -21,7 +21,7 @@ class _PencarianPageState extends State<PencarianPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('INI PAGE PENCARIAN'));
+    return Scaffold(body: Center(child: Text('INI PAGE PENCARIAN')));
   }
 
   Widget showLoad() {

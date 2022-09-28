@@ -13,7 +13,7 @@ class appSettings {
 
   TextStyle get hintTextStyle {
     return TextStyle(
-        fontSize: 14, fontWeight: FontWeight.w100, color: Colors.black);
+        fontSize: 14, fontWeight: FontWeight.w300, color: Colors.black);
   }
 
   Widget? get ItemCard {

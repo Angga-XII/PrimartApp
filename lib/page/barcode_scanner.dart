@@ -21,7 +21,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('INI BARCODE SCANNER'));
+    return Scaffold(body: Center(child: Text('INI BARCODE SCANNER')));
   }
 
   Widget showLoad() {

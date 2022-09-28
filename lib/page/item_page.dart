@@ -21,8 +21,16 @@ class _itemPageState extends State<itemPage> {
   final settings = appSettings();
   final _firestore = FirebaseFirestore.instance;
   shopItem items = shopItem();
-  var _namaController = TextEditingController();
-  var _hargaController = TextEditingController();
+  var _namaController;
+  var _hargaController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _namaController = TextEditingController(text: widget.item.nama);
+    _hargaController = TextEditingController(text: widget.item.harga);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +53,11 @@ class _itemPageState extends State<itemPage> {
               child: Image.network('https://picsum.photos/250?image=9'),
             ),
           ),
-          _itemCard('Nama Barang :', widget.item.nama!),
+          _itemCard('Nama Barang :', widget.item.nama!, _namaController),
           SizedBox(height: 10),
-          _itemCard('Harga Barang :', widget.item.harga!),
+          _itemCard('Harga Barang :', widget.item.harga!, _hargaController),
           SizedBox(height: 10),
-          _itemCard('Terakhir diubah :', widget.item.tanggalMasuk!),
+          _itemCard('Terakhir diubah :', widget.item.tanggalMasuk!, null),
           SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +99,7 @@ class _itemPageState extends State<itemPage> {
     );
   }
 
-  Widget _itemCard(String title, String body) {
+  Widget _itemCard(String title, String body, _control) {
     return InkWell(
       child: Card(
         child: InputDecorator(
@@ -108,10 +116,12 @@ class _itemPageState extends State<itemPage> {
               ),
             ),
           ),
-          child: Text(
-            body,
-            style: settings.defaultTextStyle,
-          ),
+          child: _control != null
+              ? TextField(
+                  controller: _control,
+                  style: settings.defaultTextStyle,
+                )
+              : Text(body, style: settings.defaultTextStyle),
         ),
       ),
     );
@@ -123,26 +133,46 @@ class _itemPageState extends State<itemPage> {
       //   'Gambar': '}.jpg',
       'Nama': '${_namaController.text}',
       'Tanggal Masuk': _now.toIso8601String(),
-      'Harga': 'Rp.${_hargaController.text}',
+      'Harga': '${_hargaController.text}',
     };
+    showMessageConfirmation(_data);
+    print('test ${_namaController.text} ${_hargaController.text}');
+  }
+
+  showMessageConfirmation(_data) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.noHeader,
       // animType: AnimType.rightSlide,
       title: 'Simpan Barang?',
-      desc: 'Apa anda yakin anda ingin menyimpan barang ini?',
+      desc: 'Apa anda yakin anda ingin mengubah barang ini?',
       btnCancelOnPress: () {},
       btnOkOnPress: () {
-        _firestore.collection('item').add(_data);
+        // _firestore.collection('item').add(_data);
+        _firestore
+            .collection('item')
+            .doc(widget.item.id)
+            .update(_data)
+            .then(showMessageSuccess());
       },
     ).show();
-    print('test ${_namaController.text} ${_hargaController.text}');
+  }
+
+  showMessageSuccess() {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.noHeader,
+      // animType: AnimType.rightSlide,
+      title: 'Berhasil',
+      desc: 'Perubahan data berhasil',
+      btnOkOnPress: () {},
+    ).show();
   }
 
   void _resetData() {
     setState(() {
-      _namaController.clear();
-      _hargaController.clear();
+      _namaController = TextEditingController(text: widget.item.nama);
+      _hargaController = TextEditingController(text: widget.item.harga);
     });
     print('test reset ${_namaController.text} ${_hargaController.text}');
   }
