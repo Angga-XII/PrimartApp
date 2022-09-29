@@ -16,25 +16,9 @@ import 'package:primart/page/item_list.dart';
 //shows a scrollable item list
 //a button to add new data to the database
 
-class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
-  // This widget is the root of your application.
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Primart',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const DashboardPage(title: 'Toko Primart'),
-    );
-  }
-}
-
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const DashboardPage({Key? key}) : super(key: key);
+  static const String route = '/dashboard';
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
@@ -47,7 +31,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text("Toko Primart"),
           centerTitle: true,
           backgroundColor: Colors.blue,
           iconTheme: IconThemeData(

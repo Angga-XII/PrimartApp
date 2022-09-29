@@ -9,15 +9,16 @@ import 'package:primart/config/item_model.dart';
 //including a button to edit it
 // data shown includes price, images, names, date edited
 
-class itemPage extends StatefulWidget {
+class ItemPage extends StatefulWidget {
   // final String title;
+  static const String route = '/item_page';
   final shopItem item;
-  const itemPage({Key? key, required this.item}) : super(key: key);
+  const ItemPage({Key? key, required this.item}) : super(key: key);
   @override
-  State<itemPage> createState() => _itemPageState();
+  State<ItemPage> createState() => _ItemPageState();
 }
 
-class _itemPageState extends State<itemPage> {
+class _ItemPageState extends State<ItemPage> {
   final settings = appSettings();
   final _firestore = FirebaseFirestore.instance;
   shopItem items = shopItem();
@@ -43,58 +44,60 @@ class _itemPageState extends State<itemPage> {
           color: Colors.white, //change your color here
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.network('https://picsum.photos/250?image=9'),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network('https://picsum.photos/250?image=9'),
+              ),
             ),
-          ),
-          _itemCard('Nama Barang :', widget.item.nama!, _namaController),
-          SizedBox(height: 10),
-          _itemCard('Harga Barang :', widget.item.harga!, _hargaController),
-          SizedBox(height: 10),
-          _itemCard('Terakhir diubah :', widget.item.tanggalMasuk!, null),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: _resetData,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.delete),
-                    SizedBox(width: 2),
-                    Text('Hapus', style: TextStyle(fontSize: 20)),
-                  ],
+            _itemCard('Nama Barang :', widget.item.nama!, _namaController),
+            SizedBox(height: 10),
+            _itemCard('Harga Barang :', widget.item.harga!, _hargaController),
+            SizedBox(height: 10),
+            _itemCard('Terakhir diubah :', widget.item.tanggalMasuk!, null),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _resetData,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.delete),
+                      SizedBox(width: 2),
+                      Text('Hapus', style: TextStyle(fontSize: 20)),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              ElevatedButton(
-                onPressed: _saveData,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.save),
-                    SizedBox(width: 2),
-                    Text('Simpan', style: TextStyle(fontSize: 20)),
-                  ],
+                SizedBox(
+                  width: 10,
                 ),
-              ),
-            ],
-          ),
-        ],
+                ElevatedButton(
+                  onPressed: _saveData,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.save),
+                      SizedBox(width: 2),
+                      Text('Simpan', style: TextStyle(fontSize: 20)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -165,7 +168,11 @@ class _itemPageState extends State<itemPage> {
       // animType: AnimType.rightSlide,
       title: 'Berhasil',
       desc: 'Perubahan data berhasil',
-      btnOkOnPress: () {},
+      btnOkOnPress: () {
+        print('test routing');
+        Navigator.pop(context);
+        Navigator.pushReplacementNamed(context, '/item_list');
+      },
     ).show();
   }
 

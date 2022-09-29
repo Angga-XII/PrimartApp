@@ -12,28 +12,47 @@ import 'package:primart/page/pencarian_page.dart';
 import 'package:primart/page/test_scroll.dart';
 
 class ItemList extends StatefulWidget {
+  static const String route = '/item_list';
   const ItemList({Key? key}) : super(key: key);
   @override
   State<ItemList> createState() => _ItemListState();
 }
 
 class _ItemListState extends State<ItemList> {
-  // This widget is the root of your application.
-  @override
-  void initState() {
-    super.initState();
-  }
-
   final _firestore = FirebaseFirestore.instance;
   int _counter = 0;
+  bool isPencarian = false;
   final settings = appSettings();
+  var _pencarianController;
+
+  @override
+  void initState() {
+    setState(() {
+      isPencarian = false;
+      _pencarianController = TextEditingController();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Toko Primart'),
+          title: isPencarian
+              ? TextField(controller: _pencarianController)
+              : Text('Toko Primart'),
+          leading: IconButton(
+              icon: isPencarian
+                  ? Icon(Icons.backspace_outlined)
+                  : Icon(Icons.close),
+              onPressed: () {
+                isPencarian
+                    ? setState(() {
+                        isPencarian = false;
+                      })
+                    : Navigator.pop(context);
+              }),
           centerTitle: true,
           backgroundColor: Colors.blue,
           iconTheme: IconThemeData(
@@ -48,7 +67,7 @@ class _ItemListState extends State<ItemList> {
         ),
         // body: Container(child: itemComponent()),
         // body: Container(child: testPage()),
-        body: itemComponent(),
+        body: isPencarian ? PencarianPage() : itemComponent(),
         floatingActionButton: FloatingActionButton(
           // onPressed: _incrementCounter,
           onPressed: _showAddItemPage,
@@ -60,12 +79,15 @@ class _ItemListState extends State<ItemList> {
   }
 
   void _showPencarianPage() async {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => PencarianPage(),
-          fullscreenDialog: true,
-        ));
+    setState(() {
+      isPencarian = true;
+    });
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (BuildContext context) => PencarianPage(),
+    //       fullscreenDialog: true,
+    //     ));
   }
 
   void _showAddItemPage() async {

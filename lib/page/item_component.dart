@@ -130,7 +130,7 @@ class _itemComponentState extends State<itemComponent> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => itemPage(
+          builder: (BuildContext context) => ItemPage(
             item: data,
           ),
           fullscreenDialog: true,

@@ -6,6 +6,7 @@ import 'package:primart/config/item_model.dart';
 import 'package:primart/config/settings.dart';
 
 class BarcodeScannerPage extends StatefulWidget {
+  static const String route = '/barcode';
   const BarcodeScannerPage({Key? key}) : super(key: key);
   @override
   State<BarcodeScannerPage> createState() => _BarcodeScannerPageState();

@@ -7,6 +7,7 @@ import 'package:primart/config/settings.dart';
 
 class PencarianPage extends StatefulWidget {
   const PencarianPage({Key? key}) : super(key: key);
+  static const String route = '/pencarian';
   @override
   State<PencarianPage> createState() => _PencarianPageState();
 }
