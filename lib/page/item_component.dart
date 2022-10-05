@@ -7,7 +7,8 @@ import 'package:primart/config/settings.dart';
 import 'package:primart/page/test_scroll.dart';
 
 class itemComponent extends StatefulWidget {
-  const itemComponent({Key? key}) : super(key: key);
+  List<shopItem>? items = <shopItem>[];
+  itemComponent({this.items, Key? key}) : super(key: key);
   @override
   State<itemComponent> createState() => _itemComponentState();
 }
@@ -21,8 +22,10 @@ class _itemComponentState extends State<itemComponent> {
   @override
   void initState() {
     // TODO: implement initState
+    // items = widget.items ?? [];
+    // print('test comp ${items}');
     showLoad();
-    getItems();
+    // getItems();
     super.initState();
   }
 
@@ -38,7 +41,9 @@ class _itemComponentState extends State<itemComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return getListItem();
+    items = widget.items ?? [];
+    print('test comp ${items}');
+    return items.length == 0 ? Container(child: Text('TEXT')) : getListItem();
   }
 
   Widget getListItem() {

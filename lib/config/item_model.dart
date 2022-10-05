@@ -33,4 +33,16 @@ class shopItem {
     }
     return _listOfItems;
   }
+
+  bool checkIfDuplicate(List<dynamic> reference, var comparison) {
+    // bool isDuplicate = false;
+    // reference.forEach((element)=> elem);
+    // List<shopItem> _listOfItems = [];
+    // for (var e in data.docs) {
+    //   var d = shopItem.fromJson(e.data(), e.id);
+    //   _listOfItems.add(d);
+    // }
+    // return _listOfItems;
+    return false;
+  }
 }
